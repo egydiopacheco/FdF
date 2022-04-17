@@ -21,6 +21,10 @@ VALGRIND_F 	= --leak-check=full \
 			--log-file=$(LOG_FILE) \
 			./fdf maps/42.fdf
 RM 			= rm -f
+GREEN		= \033[32;1m
+RED			= \033[31;1m
+YELLOW		= \033[33;1m
+CYAN		= \033[36;1m
 
 SRC_FILES 	=	$(SRC_DIR)builder.c \
 				$(SRC_DIR)cartesian_plane.c \
@@ -56,30 +60,30 @@ OBJ_FILES	= $(notdir $(SRC_FILES:.c=.o))
 all: $(NAME)
 
 $(NAME): $(OBJ_FILES) $(LIBFT) $(MLX_LINUX)
-	@printf "\n$(CY)Compiling FdF...$(RC)\n"
+	@printf "\n$(CYAN)Compiling FdF...$(CYAN)\n"
 	@sleep 0.5
 	$(CC) $(CFLAGS) -o $(NAME) $(OBJ_FILES) -L $(LIB_DIR) -L $(MLX_DIR) -lft $(MLX_FLAGS)
 	mkdir obj
-	@printf "\n$(CY)Creating object files folder...$(RC)\n"
+	@printf "\n$(CYAN)Creating object files folder...$(CYAN)\n"
 	@sleep 0.2
 	mv $(OBJ_FILES) obj/
-	@printf "$(GR)FdF compiling was successful!$(RC)\n\n"
+	@printf "$(GREEN)FdF compiling was successful!$(GREEN)\n\n"
 
 $(OBJ_FILES): $(SRC_FILES)
-	@printf "\n$(CY)Creating objects...$(RC)\n"
+	@printf "\n$(CYAN)Creating objects...$(CYAN)\n"
 	@sleep 0.2
 	$(CC) $(CFLAGS) -g -c -I ./includes/ $(SRC_FILES)
 
 $(MLX_LINUX):
-	@printf "\n$(CY)Compiling MinilibX...$(RC)\n"
+	@printf "\n$(CYAN)Compiling MinilibX...$(CYAN)\n"
 	@sleep 0.2
 	@make -C $(MLX_DIR)
-	@printf "$(GR)MinilibX compiling was sucessful!$(RC)\n\n"
+	@printf "$(GREEN)MinilibX compiling was sucessful!$(GREEN)\n\n"
 
 $(LIBFT):
-	@printf "\n$(GR)Compiling libft...$(RC)\n"
+	@printf "\n$(YELLOW)Compiling libft...$(YELLOW)\n"
 	@make -C $(LIB_DIR)
-	@printf "$(GR)Libft compiling was sucessful!$(RC)\n\n"
+	@printf "$(GREEN)Libft compiling was sucessful!$(GREEN)\n\n"
 
 bonus: 		all
 
@@ -88,30 +92,30 @@ re: 		fclean all
 rebonus: 	fclean bonus
 
 valgrind:
-	@printf "\n$(CY)Initializing valgrind analysis...$(RC)\n"
+	@printf "\n$(RED)Initializing valgrind analysis...$(RED)\n"
 	@sleep 0.2
 	$(VALGRIND) $(VALGRIND_F)
-	@printf "\n$(CY)Done!$(RC)\n"
+	@printf "\n$(GREEN)Done!$(GREEN)\n"
 logdel:
 			$(RM) $(LOG_FILE)
 
 clean:
-	@printf "\n$(YE)Cleaning Libft directory...$(RC)\n"
+	@printf "\n$(BLUE)Cleaning Libft directory...$(BLUE)\n"
 	@make clean -C $(LIB_DIR)
 	@sleep 0.2
-	@printf "$(GR)Libft cleaned successfully!$(RC)\n\n"
+	@printf "$(GREEN)Libft cleaned successfully!$(GREEN)\n\n"
 
-	@printf "\n$(CY)Removing object folder from directory...$(RC)\n"
+	@printf "\n$(RED)Removing object folder from directory...$(RED)\n"
 	$(RM) -rf $(OBJ_FILES) $(BONUS_OBJ) objs/
 
 fclean: clean
-	@printf "\n$(YE)Cleaning everything...$(RC)\n"
+	@printf "\n$(BLUE)Cleaning everything...$(BLUE)\n"
 	@sleep 0.2
 	$(RM) -rf $(NAME) $(BONUS_OBJ) objs/
 	@make fclean -C $(LIB_DIR)
 	@make clean -C $(MLX_DIR)
 	make logdel
-	@printf "$(GR)Full clean performed successfully!$(RC)\n\n"
+	@printf "$(GREEN)Full clean performed successfully!$(GREEN)\n\n"
 
 debug:		$(OBJ_FILES) $(LIBFT) $(MLX_LINUX)
 			$(CC) -ggdb $(CFLAGS) -o $(NAME) $(OBJ_FILES) -L $(LIB_DIR) -L $(MLX_DIR) -lft $(MLX_FLAGS)
@@ -122,9 +126,4 @@ eval_debug:
 
 .PHONY: clean fclean re rebonus all bonus debug eval_debug
 
-# Colors
-GR	= \033[32;1m
-RE	= \033[31;1m
-YE	= \033[33;1m
-CY	= \033[36;1m
-RC	= \033[0m
+
