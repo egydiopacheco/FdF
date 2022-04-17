@@ -42,6 +42,10 @@ void	error_extension(int error_code)
 {
 	if (error_code == ALLOCATE_ERROR)
 		ft_putstr_fd("Memory allocation failed!", 1);
+	else if (error_code == COLOR_INIT_ERROR)
+		ft_putstr_fd("Error while initializing colors!", 1);
+	else if (error_code == VECTOR_INIT_ERROR)
+		ft_putstr_fd("Error while initializing a vector!", 1);
 	exit(error_code);
 }
 

@@ -12,9 +12,6 @@
 
 #include "../include/fdf.h"
 
-static void	isometric(t_vector *V, float a_x, float b_x);
-static void	perspective(t_vector *V);
-
 void	project(t_pov *pov, t_vector *vector)
 {
 	if (pov->projection == ISOMETRIC)
@@ -25,7 +22,7 @@ void	project(t_pov *pov, t_vector *vector)
 		return ;
 }
 
-static void	isometric(t_vector *V, float a_x, float b_x)
+void	isometric(t_vector *V, float a_x, float b_x)
 {
 	V->p_a.x = (V->p_a.x - V->p_a.y) * cos(DEG_30);
 	V->p_a.y = (a_x + V->p_a.y) * sin(DEG_30) - V->p_a.z;
@@ -33,7 +30,7 @@ static void	isometric(t_vector *V, float a_x, float b_x)
 	V->p_b.y = (b_x + V->p_b.y) * sin(DEG_30) - V->p_b.z;
 }
 
-static void	perspective(t_vector *V)
+void	perspective(t_vector *V)
 {
 	double	z;
 

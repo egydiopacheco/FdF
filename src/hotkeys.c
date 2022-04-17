@@ -15,7 +15,7 @@
 int	hotkeys_hooks(int key, t_fdf *fdf)
 {
 	if (key == ESC)
-		close_all(fdf, 0);
+		destroy_everything(fdf, 0);
 	else if (key == KEY_D || key == KEY_A || key == KEY_W || key == KEY_S)
 		moving_actions(key, fdf);
 	else if (key == ARROW_UP || key == ARROW_DOWN || key == ARROW_LEFT || \
@@ -54,9 +54,9 @@ void	moving_actions(int key, t_fdf *fdf)
 void	scaling_actions(int key, t_fdf *fdf)
 {
 	if (key == ARROW_UP)
-		fdf->pov->params.scaling_factor += 0.5;
+		fdf->pov->params.scaling_factor += 2;
 	else if (key == ARROW_DOWN)
-		fdf->pov->params.scaling_factor -= 0.5;
+		fdf->pov->params.scaling_factor -= 2;
 	else if (key == ARROW_LEFT && fdf->pov->params.depth_scale > -1)
 		fdf->pov->params.depth_scale -= 0.1;
 	else if (key == ARROW_RIGHT && fdf->pov->params.depth_scale < 1)

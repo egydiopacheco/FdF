@@ -16,11 +16,8 @@
 # define TITLE	 	        "FdF - A 3D Wireframe Viewer"
 # define WINDOW_WIDTH		1280
 # define WINDOW_HEIGHT		1024
-# define MAX_PIXEL			1310720
 
 # define ESC                65307
-# define TAB                65289
-# define ENTER              0xff08
 # define ARROW_UP           65362 
 # define ARROW_DOWN         65364
 # define ARROW_LEFT         65361

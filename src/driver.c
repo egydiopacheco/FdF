@@ -43,7 +43,7 @@ int	expose_handle(t_fdf *fdf)
 
 int	quit(t_fdf *fdf)
 {
-	close_all(fdf, 0);
+	destroy_everything(fdf, 0);
 	mlx_destroy_window(fdf->mlx_ptr, fdf->win_ptr);
 	return (0);
 }

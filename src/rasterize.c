@@ -20,7 +20,7 @@ void	rasterize(t_fdf *fdf)
 
 	maximum_width = fdf->landscape->horizontal_boundaries;
 	maximum_height = fdf->landscape->vertical_boundaries;
-	clear_image(fdf->image, MAX_PIXEL * 4);
+	clear_image(fdf->image, WINDOW_WIDTH * WINDOW_HEIGHT);
 	p.y = 0;
 	while (p.y < maximum_height)
 	{
@@ -58,7 +58,7 @@ void	rasterize_vector(t_fdf *fdf, t_point p_a, t_point p_b)
 	colorfy_point(fdf, &p_b);
 	fdf->image->vector = initialize_vector(p_a, p_b, fdf->landscape);
 	if (!fdf->image->vector)
-		close_all(fdf, 7);
+		destroy_everything(fdf, VECTOR_INIT_ERROR);
 	rotate(fdf->pov, fdf->image->vector);
 	project(fdf->pov, fdf->image->vector);
 	transform(fdf->pov, fdf->image->vector);

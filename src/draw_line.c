@@ -23,7 +23,7 @@ void	draw_line(t_fdf *fdf, t_point p_a, t_point p_b)
 	steps = calculate_amount_steps(&dx, &dy, p_a, p_b);
 	color = initialize_color(p_a, p_b);
 	if (!color)
-		close_all(fdf, 8);
+		destroy_everything(fdf, COLOR_INIT_ERROR);
 	iterator = 0;
 	while (iterator < steps)
 	{

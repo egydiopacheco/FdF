@@ -25,7 +25,7 @@ t_landscape	*parse_landscape(char *filename)
 	if (!landscape)
 		return (NULL);
 	landscape->horizontal_boundaries = get_width(filename);
-	landscape->vertical_boundaries = get_depth(filename);
+	landscape->vertical_boundaries = get_height(filename);
 	landscape->cartesian_plane = build_cartesian_plane(landscape-> \
 			horizontal_boundaries, landscape->vertical_boundaries);
 	if (!landscape->cartesian_plane)

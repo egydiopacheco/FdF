@@ -15,9 +15,8 @@
 int	get_width(char *filename)
 {
 	int		fd;
-	char	*line;
 	int		width;
-	int		new_width;
+	char	*line;
 
 	fd = open(filename, O_RDONLY, 0);
 	line = get_next_line(fd);
@@ -25,21 +24,18 @@ int	get_width(char *filename)
 		return (0);
 	width = (int)ft_split_count(line, ' ');
 	free(line);
-	while (1)
+	while (true)
 	{
 		line = get_next_line(fd);
 		if (line == NULL)
 			break ;
-		new_width = (int)ft_split_count(line, ' ');
-		if (width != new_width)
-			return (0);
 		free(line);
 	}
 	close(fd);
 	return (width);
 }
 
-int	get_depth(char *filename)
+int	get_height(char *filename)
 {
 	int		fd;
 	int		depth;
@@ -47,13 +43,12 @@ int	get_depth(char *filename)
 
 	fd = open(filename, O_RDONLY, 0);
 	depth = 0;
-	while (1)
+	while (true)
 	{
 		line = get_next_line(fd);
 		if (line == NULL)
 			break ;
-		if (ft_isprint(*line))
-			depth++;
+		depth++;
 		free(line);
 	}
 	close(fd);

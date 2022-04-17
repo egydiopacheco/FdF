@@ -42,7 +42,7 @@ float	fit_screen(t_landscape *landscape)
 	scale_x = WINDOW_WIDTH / landscape->horizontal_boundaries;
 	scale_y = WINDOW_HEIGHT / landscape->vertical_boundaries;
 	scale_factor = ft_min_value_between(scale_x, scale_y);
-	if (scale_factor < 4)
-		return (2);
-	return (scale_factor / 2);
+	if (scale_factor < 3.85)
+		return (1.25);
+	return (scale_factor / 3.75);
 }

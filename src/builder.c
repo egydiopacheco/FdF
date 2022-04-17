@@ -33,12 +33,12 @@ void	build_image(t_fdf **fdf)
 {
 	(*fdf)->image = initialize_image(*fdf);
 	if (!(*fdf)->image)
-		close_landscape(*fdf, 5);
+		destroy_landscape(*fdf, IMAGE_BUILD_ERROR);
 }
 
 void	build_pov(t_fdf **fdf)
 {
 	(*fdf)->pov = initialize_pov((*fdf)->landscape);
 	if (!(*fdf)->pov)
-		close_all(*fdf, 6);
+		destroy_everything(*fdf, POV_BUILD_ERROR);
 }

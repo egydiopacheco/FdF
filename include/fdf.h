@@ -96,7 +96,7 @@ void		show_instructions(t_fdf *fdf);
 
 // landscape_dimensions.c
 int			get_width(char *filename);
-int			get_depth(char *filename);
+int			get_height(char *filename);
 
 // parser.c
 t_landscape	*parse_landscape(char *filename);
@@ -114,6 +114,8 @@ float		fit_screen(t_landscape *landscape);
 
 // projection.c
 void		project(t_pov *pov, t_vector *V);
+void		isometric(t_vector *V, float a_x, float b_x);
+void		perspective(t_vector *V);
 
 // rasterize.c
 void		rasterize(t_fdf *fdf);
@@ -125,14 +127,17 @@ void		refresh(t_fdf *fdf);
 void		clear_image(t_image *image, int image_size);
 
 // remove_from_context.c
-void		close_all(t_fdf *fdf, int exit_code);
-void		close_landscape(t_fdf *fdf, int exit_code);
+void		destroy_everything(t_fdf *fdf, int exit_code);
+void		destroy_landscape(t_fdf *fdf, int exit_code);
+void		destroy_cartesian_plane(t_fdf *fdf);
+void		destroy_image(t_fdf *fdf);
+void		destroy_pointers(t_fdf *fdf);
 
 // rotate.c
 void		rotate(t_pov *pov, t_vector *vector);
-void		rotate_x(t_vector *V, float a_y, float b_y, double angle);
-void		rotate_y(t_vector *V, float a_x, float b_x, double angle);
-void		rotate_z(t_vector *V, float a_x, float b_x, double angle);
+void		rotate_x(t_vector *V, float a_y, float b_y, double theta);
+void		rotate_y(t_vector *V, float a_x, float b_x, double theta);
+void		rotate_z(t_vector *V, float a_x, float b_x, double theta);
 
 // scale.c
 void		scale(t_vector *vector, int scale_factor);
