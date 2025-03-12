@@ -1,110 +1,89 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   structs.h                                          :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: epacheco <epacheco@student.42sp.org.       +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/18 18:29:48 by epacheco          #+#    #+#             */
-/*   Updated: 2022/04/17 05:03:12 by epacheco         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #ifndef STRUCTS_H
-# define STRUCTS_H
+#define STRUCTS_H
 
-typedef struct s_point
-{
-	float		x;
-	float		y;
-	float		z;
-	int			color;
-}				t_point;
+#include <vector>
+struct Point {
+  float x, y, z;
+  int color;
+};
 
-typedef struct s_landscape
-{
-	t_point		**cartesian_plane;
-	int			horizontal_boundaries;
-	int			vertical_boundaries;
-	int			maximum_depth;
-	int			minimum_depth;
-}				t_landscape;
+struct Landscape {
+  std::vector<std::vector<Point>> cartesian_plane;
+  int horizontal_boundaries;
+  int vertical_boundaries;
+  int maximum_depth;
+  int minimum_depth;
 
-typedef struct s_vector
-{
-	t_point		p_a;
-	t_point		p_b;
-	float		z;
-}				t_vector;
+  Landscape(int width, int height)
+      : horizontal_boundaries(width), vertical_boundaries(height),
+        cartesian_plane(width, std::vector<Point>(height)) {}
+};
 
-typedef struct s_hexagon
-{
-	t_point		p1;
-	t_point		p2;
-	t_point		p3;
-	t_point		p4;
-	t_point		p5;
-	t_point		p6;
-}				t_hexagon;
+struct Vector {
+  Point p_a;
+  Point p_b;
+  float z;
+};
 
-typedef struct s_rgb
-{
-	int			r;
-	int			g;
-	int			b;
-	int			encoded;
-}				t_rgb;
+struct Hexagon {
+  Point p1;
+  Point p2;
+  Point p3;
+  Point p4;
+  Point p5;
+  Point p6;
+};
 
-typedef struct s_gradient
-{
-	t_rgb		begin;
-	t_rgb		end;
-}				t_gradient;
+struct RGB {
+  int r;
+  int g;
+  int b;
+  int encoded;
+};
 
-typedef struct s_color
-{
-	t_gradient	gradient;
-	int			dr;
-	int			dg;
-	int			db;
-}				t_color;
+struct Gradient {
+  RGB begin;
+  RGB end;
+};
 
-typedef struct s_image
-{
-	void		*img_ptr;
-	int			pixel_bits;
-	int			vector_size;
-	int			endian;
-	char		*address;
-	int			menu;
-	t_vector	*vector;
-}				t_image;
+struct Color {
+  Gradient gradient;
+  int dr;
+  int dg;
+  int db;
+};
 
-typedef struct s_params
-{
-	float		depth_scale;
-	float		scaling_factor;
-	double		a;
-	double		b;
-	double		c;
+struct Image {
+  void *img_ptr;
+  int pixel_bits;
+  int vector_size;
+  int endian;
+  char *address;
+  int menu;
+  Vector *vector;
+};
 
-}				t_params;
+struct Params {
+  float depth_scale;
+  float scaling_factor;
+  double a;
+  double b;
+  double c;
+};
 
-typedef struct s_pov
-{
-	int			projection;
-	int			color_pallet;
-	t_params	params;
-	t_point		pos;
-}				t_pov;
+struct POV {
+  int projection;
+  int color_pallet;
+  Params params;
+  Point pos;
+};
 
-typedef struct s_fdf
-{
-	t_landscape	*landscape;
-	void		*mlx_ptr;
-	void		*win_ptr;
-	t_image		*image;
-	t_pov		*pov;
-}				t_fdf;
+struct FDF {
+  Landscape *landscape;
+  void *mlx_ptr;
+  void *win_ptr;
+  Image *image;
+  POV *pov;
+};
 
 #endif

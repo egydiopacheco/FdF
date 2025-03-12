@@ -1,151 +1,136 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   fdf.h                                              :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: epacheco <epacheco@student.42sp.org.       +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/18 18:29:48 by epacheco          #+#    #+#             */
-/*   Updated: 2022/04/17 05:03:12 by epacheco         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #ifndef FDF_H
-# define FDF_H
+#define FDF_H
 
-# include "../libft/libft.h"
-# include "../minilibx-linux/mlx.h"
-# include "aliases.h"
-# include "colors.h"
-# include "errors.h"
-# include "structs.h"
-# include <fcntl.h>
-# include <math.h>
-# include <stdlib.h>
-# include <unistd.h>
+#include "aliases.h"
+#include "colors.h"
+#include "errors.h"
+#include "structs.h"
+#include <algorithm>
+#include <fcntl.h>
+#include <iostream>
+#include <math.h>
+#include <stdlib.h>
+#include <unistd.h>
 
 // builder.c
-void		build_fdf(t_fdf **fdf);
-void		build_landscape(t_fdf **fdf, char *filename);
-void		build_image(t_fdf **fdf);
-void		build_pov(t_fdf **fdf);
+void build_fdf(FDF **fdf);
+void build_landscape(FDF **fdf, char *filename);
+void build_image(FDF **fdf);
+void build_pov(FDF **fdf);
 
 // cartesian_plane.c
-t_point		**build_cartesian_plane(int width, int depth);
+Point **build_cartesian_plane(int width, int depth);
 
 // checkings.c
-void		ensure_correct_input(int argc, char *filename);
-void		ensure_correct_extension(char *filename);
+void ensure_correct_input(int argc, char *filename);
+void ensure_correct_extension(char *filename);
 
 // color_utilities.c
-int			get_color(t_color *color, int z_value, int maximum_depth);
-int			normalize(int value);
-int			get_gradient_encoded(t_color *color, float gradient_factor);
-void		colorfy_point(t_fdf *fdf, t_point *P);
+int geColor(Color *color, int z_value, int maximum_depth);
+int normalize(int value);
+int get_gradient_encoded(Color *color, float gradient_factor);
+void colorfy_point(FDF *fdf, Point *P);
 
 // draw_line.c
-void		draw_line(t_fdf *fdf, t_point p_a, t_point p_b);
+void draw_line(FDF *fdf, Point p_a, Point p_b);
 
 // draw_utilies.c
-void		allocate_pixel_to_image(t_image *image, t_point P, int color);
-int			calculate_amount_steps(float *dx, float *dy, t_point p_a,
-				t_point p_b);
-int			is_out_of_bounds(t_point P);
+void allocate_pixel_to_image(Image *image, Point P, int color);
+int calculate_amount_steps(float *dx, float *dy, Point p_a, Point p_b);
+int is_out_of_bounds(Point P);
 
 // driver.c
-void		start_driver(char *filename);
-int			expose_handle(t_fdf *fdf);
-int			quit(t_fdf *fdf);
+void start_driver(char *filename);
+int expose_handle(FDF *fdf);
+int quit(FDF *fdf);
 
 // error_handler.c
-void		raise_error(int exit_code);
-void		error_extension(int error_code);
+void raise_error(int exit_code);
+void error_extension(int error_code);
 
 // hotkeys.c
-int			hotkeys_hooks(int key, t_fdf *fdf);
-void		moving_actions(int key, t_fdf *fdf);
-void		scaling_actions(int key, t_fdf *fdf);
-void		rotation_actions(int key, t_fdf *fdf);
-void		change_projections(int key, t_fdf *fdf);
+int hotkeys_hooks(int key, FDF *fdf);
+void moving_actions(int key, FDF *fdf);
+void scaling_actions(int key, FDF *fdf);
+void rotation_actions(int key, FDF *fdf);
+void change_projections(int key, FDF *fdf);
 
 // initialize_fdf.c
-void		initialize_fdf(t_fdf **fdf, char *filename);
+void initialize_fdf(FDF **fdf, char *filename);
 
-//initialize_color.c
-t_color		*initialize_color(t_point p_a, t_point p_b);
-t_color		*initialize_color_scheme(int min_color, int max_color);
+// initialize_color.c
+Color *initialize_color(Point p_a, Point p_b);
+Color *initialize_color_scheme(int min_color, int max_color);
 
 // initialize_image.c
-t_image		*initialize_image(t_fdf *fdf);
-void		fill_image_params(t_image **image, void *mlx);
+Image *initialize_image(FDF *fdf);
+void fill_image_params(Image **image, void *mlx);
 
 // initialize_landscape.c
-t_landscape	*initialize_landscape(void);
-void		fill_landscape_params(t_landscape **landscape);
+Landscape *initialize_landscape(void);
+void fill_landscape_params(Landscape **landscape);
 
 // initialize_pov.c
-t_pov		*initialize_pov(t_landscape *landscape);
-void		fill_pov_params(t_pov **pov, t_landscape *landscape);
+POV *initialize_pov(Landscape *landscape);
+void fill_pov_params(POV **pov, Landscape *landscape);
 
 // initialize_vector.c
-t_vector	*initialize_vector(t_point p_a, t_point p_b,
-				t_landscape *landscape);
+Vector *initialize_vector(Point p_a, Point p_b, Landscape *landscape);
 
 // instructions.c
-void		show_instructions(t_fdf *fdf);
+void show_instructions(FDF *fdf);
 
 // landscape_dimensions.c
-int			get_width(char *filename);
-int			get_height(char *filename);
+int get_width(char *filename);
+int get_height(char *filename);
 
 // parser.c
-t_landscape	*parse_landscape(char *filename);
+Landscape *parse_landscape(char *filename);
 
 // parser_utilities.c
-void		parse_points(char *filename, t_landscape *landscape);
-void		single_point_mapping(int pos_x, int pos_y,
-				t_point **cartesian_plane);
-void		parse_point_color(t_landscape *landscape, int x, int y, char *vl);
-void		update_depth_values(int x, int y, t_landscape *landscape);
+void parse_points(char *filename, Landscape *landscape);
+void single_point_mapping(int pos_x, int pos_y, Point **cartesian_plane);
+void parse_poinColor(Landscape *landscape, int x, int y, char *vl);
+void update_depth_values(int x, int y, Landscape *landscape);
 
-// positioning_utilities.c
-void		centralize(t_landscape *landscape);
-float		fit_screen(t_landscape *landscape);
+// positioning_utilities.c  --> In C++
+void centralize(Landscape *landscape);
+float fit_screen(const Landscape *landscape);
 
 // projection.c
-void		project(t_pov *pov, t_vector *V);
-void		isometric(t_vector *V, float a_x, float b_x);
-void		perspective(t_vector *V);
+void project(POV *pov, Vector *V);
+void isometric(Vector *V, float a_x, float b_x);
+void perspective(Vector *V);
 
 // rasterize.c
-void		rasterize(t_fdf *fdf);
-void		check_and_plot(t_fdf *fdf, t_point p, t_point **coordinates);
-void		rasterize_vector(t_fdf *fdf, t_point p_a, t_point end);
+void rasterize(FDF *fdf);
+void check_and_plot(FDF *fdf, Point p, Point **coordinates);
+void rasterize_vector(FDF *fdf, Point p_a, Point end);
 
 // redo.c
-void		refresh(t_fdf *fdf);
-void		clear_image(t_image *image, int image_size);
+void refresh(FDF *fdf);
+void clear_image(Image *image, int image_size);
 
 // remove_from_context.c
-void		destroy_everything(t_fdf *fdf, int exit_code);
-void		destroy_landscape(t_fdf *fdf, int exit_code);
-void		destroy_cartesian_plane(t_fdf *fdf);
-void		destroy_image(t_fdf *fdf);
-void		destroy_pointers(t_fdf *fdf);
+void destroy_everything(FDF *fdf, int exit_code);
+void destroy_landscape(FDF *fdf, int exit_code);
+void destroy_cartesian_plane(FDF *fdf);
+void destroy_image(FDF *fdf);
+void destroy_pointers(FDF *fdf);
 
 // rotate.c
-void		rotate(t_pov *pov, t_vector *vector);
-void		rotate_x(t_vector *V, float a_y, float b_y, double theta);
-void		rotate_y(t_vector *V, float a_x, float b_x, double theta);
-void		rotate_z(t_vector *V, float a_x, float b_x, double theta);
+void rotate(POV *pov, Vector *vector);
+void rotate_x(Vector *V, float a_y, float b_y, double theta);
+void rotate_y(Vector *V, float a_x, float b_x, double theta);
+void rotate_z(Vector *V, float a_x, float b_x, double theta);
 
 // scale.c
-void		scale(t_vector *vector, int scale_factor);
+void scale(Vector *vector, int scale_factor);
 
 // transform.c
-void		transform(t_pov *pov, t_vector *vector);
+void transform(POV *pov, Vector *vector);
 
 // translate.c
-void		translate(t_vector *vector, int displacement_x, int displacement_y);
+void translate(Vector *vector, int displacement_x, int displacement_y);
 
 #endif
